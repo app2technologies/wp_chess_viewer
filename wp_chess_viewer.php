@@ -39,10 +39,10 @@ function wpcv_handle_pgn($content)
       $pgn = str_replace("\r", " ", $pgn);
       $pgn = str_replace("\t", " ", $pgn);
       $pgn = str_replace("'", "\\'", $pgn);
-      
+      $id = time() . '-' . rand();
       $script = "<script>
         new PgnViewer(
-          { boardName: 'game',
+          { boardName: 'game-{$id}',
             pieceSet: 'merida',
             pieceSize: 35,
             movesFormat: 'default',
@@ -50,8 +50,8 @@ function wpcv_handle_pgn($content)
           }
         );
         </script>
-        <div id='game-container'></div>
-        <div id='game-moves'></div>
+        <div id='game-{$id}-container'></div>
+        <div id='game-{$id}-moves'></div>
         ";
 
       $content = substr_replace($content, $script, $start, $length + strlen('[end-pgn]'));
